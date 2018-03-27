@@ -1,35 +1,36 @@
 import os
 import shutil
 
-from django.apps import apps as django_apps
+from django.conf import settings
 from django.db import models
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
-from edc_pdutils import CsvModelExporter
 from tempfile import mkdtemp
 
+from ..data_exporter import DataExporter, EXPORT_FORMATS, CSV
 
-class DataExporter:
 
-    def __init__(self, model=None, timestamp=None, folder=None):
-        self.folder = mkdtemp()
-        self.model_cls = django_apps.get_model(model)
-        filename = ('_'.join(
-            self.model_cls._meta.label_lower.split('.') + [timestamp])) + '.csv'
-        self.filename = os.path.join(self.folder, filename)
-        exporter = CsvModelExporter(
-            model=self.model_cls._meta.label_lower,
-            export_folder=folder,
-            delimiter='|',
-            decrypt=False)
-        self.filename = exporter.to_csv()
+app_labels = [app_label.split('.')[0] for app_label in settings.INSTALLED_APPS]
+
+APP_LABELS = (
+    ((x, x) for x in app_labels),
+)
 
 
 class DataRequest(BaseUuidModel):
 
+    data_exporter_cls = DataExporter
+
     requested = models.TextField()
 
     archive_filename = models.CharField(max_length=200, null=True)
+
+    decrypt = models.BooleanField(default=False)
+
+    export_format = models.CharField(
+        max_length=25,
+        choices=EXPORT_FORMATS,
+        default=CSV)
 
     history = HistoricalRecords()
 
@@ -38,12 +39,15 @@ class DataRequest(BaseUuidModel):
         timestamp = self.modified.strftime('%Y%m%d%H%M%S')
         folder = mkdtemp()
         for name in self.requested_as_list:
-            exported.append(DataExporter(
-                model=name, timestamp=timestamp, folder=folder))
+            exported.append(self.data_exporter_cls(
+                model=name, timestamp=timestamp, folder=folder,
+                decrypt=self.decrypt,
+                export_format=self.export_format))
         if exported:
             user = self.user_modified or self.user_created
             self.archive_filename = shutil.make_archive(
-                f'{user}_{timestamp}', 'zip', folder)
+                os.path.join(settings.EXPORT_FOLDER, f'{user}_{timestamp}'),
+                'zip', folder)
         super().save(*args, **kwargs)
 
     @property
