@@ -1,14 +1,15 @@
 import os
 import shutil
 
+from django.contrib.auth.models import User
+from edc_registration.models import RegisteredSubject
 from django.test import TestCase, tag
 from django.test.utils import override_settings
 from tempfile import mkdtemp
 
-from ..data_exporter import CSV
+from ..constants import CSV
+from ..export_to_archive import export_to_archive
 from ..models import DataRequest
-from django.contrib.auth.models import User
-from edc_registration.models import RegisteredSubject
 
 
 @override_settings(EXPORT_FOLDER=mkdtemp())
@@ -27,8 +28,10 @@ class TestExport(TestCase):
             requested=requested,
             export_format=CSV,
             user_created='erikvw')
+        export_to_archive(data_request=self.data_request)
 
     def test_request_archive(self):
+
         folder = mkdtemp()
         shutil.unpack_archive(
             self.data_request.archive_filename, folder, 'zip')
