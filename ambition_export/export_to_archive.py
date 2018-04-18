@@ -33,8 +33,6 @@ def export_to_archive(data_request=None):
         formatted_date = data_request.exported_datetime.strftime(
             '%Y%m%d%H%M%S')
         data_request.archive_filename = shutil.make_archive(
-            os.path.join(settings.EXPORT_FOLDER,
-                         f'{user}_{formatted_date}'),
-            'zip', folder)
+            os.path.join(settings.EXPORT_FOLDER, f'{user}_{formatted_date}'), 'zip', folder)
         data_request.exported = True
         data_request.save()
