@@ -1,6 +1,7 @@
 import os
 
 from django.apps import apps as django_apps
+from django.conf import settings
 from django.db import models
 from edc_base.model_managers import HistoricalRecords
 from edc_base.model_mixins import BaseUuidModel
@@ -29,7 +30,10 @@ class DataRequest(BaseUuidModel):
     history = HistoricalRecords()
 
     def __str__(self):
-        return os.path.basename(self.archive_filename)
+        if self.archive_filename:
+            return os.path.basename(self.archive_filename)
+        else:
+            return 'pending'
 
     @property
     def requested_as_list(self):

@@ -8,8 +8,11 @@ from django.test.utils import override_settings
 from tempfile import mkdtemp
 
 from ..constants import CSV
+from ..crf_dialect import CrfDialect
 from ..export_to_archive import export_to_archive
 from ..models import DataRequest
+from pprint import pprint
+from ambition_export.df_handlers import CrfDfHandler
 
 
 @override_settings(EXPORT_FOLDER=mkdtemp())
@@ -45,3 +48,7 @@ class TestExport(TestCase):
         self.assertTrue(
             os.path.exists(filename),
             msg=f'file \'{filename}\' does not exist')
+
+#     def test_crf_dialect(self):
+#         handler = CrfDfHandler()
+#         pprint(handler.__dict__)
