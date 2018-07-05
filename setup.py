@@ -17,7 +17,7 @@ setup(
     author_email='ew2789@gmail.com',
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/ambition-study/ambition-export',
+    url='https://github.com/ambition-trailtrial/ambition-export',
     license='GPL license, see LICENSE',
     description='Export data from the Ambition Edc',
     long_description=README,

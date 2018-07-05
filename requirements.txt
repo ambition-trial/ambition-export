@@ -9,3 +9,4 @@ git+https://github.com/clinicedc/edc-protocol.git@develop#egg=edc_protocol
 git+https://github.com/clinicedc/edc-model-admin.git@develop#egg=edc_model_admin
 git+https://github.com/erikvw/django-crypto-fields.git@develop#egg=django_crypto_fields
 git+https://github.com/erikvw/django-revision.git@develop#egg=django_revision
+git+https://github.com/clinicedc/edc-model-fields@develop#egg=edc-model-fields

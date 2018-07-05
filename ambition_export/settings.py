@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'edc_protocol.apps.AppConfig',
     'edc_identifier.apps.AppConfig',
     'edc_registration.apps.AppConfig',
+    'edc_pdutils.apps.AppConfig',
     'ambition_export.apps.AppConfig',
 ]
 
