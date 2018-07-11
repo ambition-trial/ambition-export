@@ -1,6 +1,13 @@
 language: python
+
 python:
-- '3.7'
+- 3.6
+- 3.7
+
+dist: xenial
+
+sudo: true
+
 addons:
   apt_packages:
   - libcups2-dev
@@ -20,6 +27,3 @@ script:
 - coverage run --source=ambition_ae manage.py test
 after_success:
 - coveralls
-notifications:
-  slack:
-    secure: cFDqK4QW7VR4fE3Lomn6GVreiKhpZ4K/etNdeVxkstX3Gh41EjQ2jaEosNWqpEgvdVGB8R5Eqj/xO++C29MHCfBAQ3lgCsdU+r7NmfP0rygV+eR8LmZtaI5YKPfw3Pnth693o6bsyjo9/dD3gK1/6nq8ORqVO+C7MX1dSsYIRhnEFiKXj1vw5OehqOP/wXR0rFLsqSppQ+9J256O69MVckPtB8EnfgwpOO15d21taoja1/CqQ8y590jqwxL78aEU3y4j2SpR5tSyNxiE5aTvDvqLEbKTyEBAAna3bwPyehKxadEJvkL0vGNNp/DOJFrWN8zu752b2yYCn/IX8vfPlN/QKd+48INwUkJAQOsK2RlULyXTu6Tm0Btnkb2uNLPsBVXHha5+VP7dkrs/PqtXegOLOhEL6Q4qmKSgPn+pCKJrF6cBRfw/bP/2pPh6xRgZXoxoeURhobHYuQMGvfDDHzzOTH8DoQCtYftRVZPuue4aNDofrYQDszGH/VprKZbGwnesfHkZ8MHTsZZX7azMbnywc0m4UBzHr761vj08isxlYsX05Ir7D+hrFnKEctZOK/5DgXZRyWpYRRZ7SUsSy1naFvGvolNuWxlOuMHrCOUS2wuxich//Qjh23qUixBIvBQyJifuWeprLOJnb3VKzC/c+5HNN94jiBl53pG9SYM=
