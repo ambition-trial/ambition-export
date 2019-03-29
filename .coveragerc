@@ -1,8 +1,4 @@
 [run]
-omit =
-    */wsgi.py
-    setup.py
-    manage.py
-    */migrations/*
-    */mommy_*
-    venv/*
+include = ambition_export/*
+omit = ambition_export/tests/*
+branch = 1
