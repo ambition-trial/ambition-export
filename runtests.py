@@ -41,6 +41,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         'django.contrib.staticfiles',
         'django_crypto_fields.apps.AppConfig',
         'django_revision.apps.AppConfig',
+        "edc_sites.apps.AppConfig",
         'edc_registration.apps.AppConfig',
         'ambition_export.apps.AppConfig',
     ],
